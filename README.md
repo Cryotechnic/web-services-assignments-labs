@@ -19,3 +19,6 @@ Most of the assignments below are designed to run on XAMPP 3.3.0 & PHP 8.0.10. T
     - Output time
     - Filename
     - Client name
+
+## Lab 1:
+- Create 2 programs to simulate socket communication between 2 machines
