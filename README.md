@@ -1,7 +1,7 @@
-# web-services-assignments
-Assignments given in the scope of the Web Services class taught at Vanier College during the Winter 2022 semester.
+# web-services-assignments-labs
+Assignments & Labs given in the scope of the Web Services class taught at Vanier College during the Winter 2022 semester.
 ---
-#### Assignments will be split into their respective folders, each containing the sql database used as well as the Assignment instructions, in the form of a Word document. Make sure to follow license terms before reusing the code.
+#### Assignments & Labs will be split into their respective folders, each containing the sql database used as well as the Assignment instructions, in the form of a Word document. Make sure to follow license terms before reusing the code.
 ---
 ## Setup:
 Most of the assignments below are designed to run on XAMPP 3.3.0 & PHP 8.0.10. These assignments were also built using Visual Studio Code as well as Windows 10 21H2. Make sure to install the required dependencies on the target system. 
