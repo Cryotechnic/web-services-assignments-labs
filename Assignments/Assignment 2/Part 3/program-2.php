@@ -25,16 +25,33 @@ echo "Message received: $buffer\n";
 /*
 * Hash Computing
 */
-$known_hash = "541b0ca5735fa941eeafa37b41365a5bc0f55edaae5184136430bc1b75399209"; // Computed hash of JSON array
+//$known_hash = "541b0ca5735fa941eeafa37b41365a5bc0f55edaae5184136430bc1b75399209"; // Computed hash of JSON array
+
+// Split substring from buffer
+$json_hashed_enc = substr($buffer, 0, strpos($buffer, '.'));
+$json_hashed = substr($buffer, strpos($buffer, '.') + 2);
+$iv = substr($buffer, strpos($buffer, '.') + 3); // FIXME: Substring is not working
+
+print("JSON_HASHED_ENC: $json_hashed_enc\n");
+print("JSON_HASHED: $json_hashed\n");
+print("IV: $iv\n");
+
+// $json = '{"name":"John", "age":30}';
+// $json_hashed = hash_hmac('sha256', $json, 'secret');
+// print("\nJSON HASHED: " . $json_hashed);
 
 // OpenSSL variables that need to be initialized for hash computing
 $cipher = "aes-128-gcm";
-$iv = 12;
-$key = 'secret';
+// $iv = 12;
+$key = 'hashed_secret';
 $tag = "GCM";
 
-$json_hashed_encrypt = openssl_encrypt($known_hash, $cipher, $key, $options=0, $iv, $tag);
-$encrypt_isequal = strcmp($buffer, $json_hashed_encrypt); // Comparing received hash from local hash
+// Decrypt the message & compare the hash
+$json_hashed_decrypt = openssl_decrypt($json_hashed, $cipher, $key, $options=0, $iv, $tag);
+print("\n\nDecrypted JSON Hashed: " . $json_hashed_decrypt . "\n");
+
+// $json_hashed_encrypt = openssl_encrypt($json_hashed, $cipher, $key, $options=0, $iv, $tag);
+$encrypt_isequal = strcmp($buffer, $json_hashed_decrypt); // Comparing received hash from local hash
 
 /**
  * Response

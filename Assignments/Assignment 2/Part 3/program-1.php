@@ -28,24 +28,29 @@ echo "Connected to socket\n";
  * Send a message to the socket
  */
 $json = '{"name":"John", "age":30}';
-$json_hashed = hash_hmac('sha256', $json, 'secret');
+$json_hashed = hash_hmac('sha256', $json, 'hashed_secret');
 
 /**
  * Encryption using OpenSSL
  */
 $cipher = "aes-128-gcm";
-$iv = 12;
+$ivlen = openssl_cipher_iv_length($cipher);
+$iv = openssl_random_pseudo_bytes($ivlen);
+//print("IV: " . $iv . "\n");
 
-$key = 'secret';
+$key = 'hashed_secret';
 $tag = "GCM";
 
 $json_hashed_encrypt = openssl_encrypt($json_hashed, $cipher, $key, $options=0, $iv, $tag);
-print("Encrypted JSON hashed " . $json_hashed_encrypt . "\n");
+//print("Encrypted JSON hashed " . $json_hashed_encrypt . "\n");
 
 /**
  * Sending request to server
  */
-$request = "$json_hashed_encrypt";
+$request = "$json_hashed_encrypt.$json_hashed.$iv";
+print("JSON_HASHED_ENC: $json_hashed_encrypt\n");
+print("JSON_HASHED: $json_hashed\n");
+print("IV: $iv\n");
 echo "Sending message '$request' to socket\n";
 socket_write($socket, $request, strlen($request));
 echo "Message sent\n";
