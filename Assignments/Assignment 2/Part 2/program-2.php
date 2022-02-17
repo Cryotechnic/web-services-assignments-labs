@@ -25,10 +25,16 @@
     /*
      * Send feedback message
      */
-    $known_hash = "541b0ca5735fa941eeafa37b41365a5bc0f55edaae5184136430bc1b75399209"; // Computed hash of json array
-    $json = '{"name":"John", "age":30}';
-    $json_hashed = hash_hmac('sha256', $json, 'secret');
-    $hash_isequal = hash_equals($json_hashed, $known_hash);
+    
+    // Split substring from buffer
+    $json_hashed = substr($buffer, 0, strpos($buffer, '.'));
+    $json = substr($buffer, strpos($buffer, '.') + 1);
+    print("JSON: " . $json);
+    print("JSON_HASHED: " . $json_hashed);
+
+    $json_hashed_2 = hash_hmac('sha256', $json, 'secret');
+    print("\nJSON HASHED 2: " . $json_hashed_2);
+    $hash_isequal = hash_equals($json_hashed_2, $json_hashed);
     if ($hash_isequal === true) {
         $response = "Hashes match!";
     } else {
